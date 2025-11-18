@@ -64,7 +64,9 @@ BookingSchema.pre('save', async function (next) {
 BookingSchema.index({ eventId: 1 });
 
 // Compound index for queries filtering by both event and email
-BookingSchema.index({ eventId: 1, email: 1 });
+BookingSchema.index({ eventId: 1, email: 1 }, { unique: true , name: 'eventId_email_unique'});
+BookingSchema.index({ eventId: 1, createdAt: -1 });
+BookingSchema.index({ email:1 });
 
 // Prevent model recompilation in development (Next.js hot reload)
 const Booking = models.Booking || model<IBooking>('Booking', BookingSchema);

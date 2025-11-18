@@ -3,12 +3,7 @@ import mongoose from 'mongoose';
 // Define the MongoDB connection string type
 const MONGODB_URI: string = process.env.MONGODB_URI || '';
 
-// Validate that the MongoDB URI is provided
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
-}
+
 
 // Define the shape of the cached connection object
 interface MongooseCache {
@@ -38,6 +33,8 @@ if (!global.mongoose) {
  * @returns A promise that resolves to the Mongoose instance
  */
 async function connectDB(): Promise<typeof mongoose> {
+  // Validate that the MongoDB URI is provided
+
   // If a connection already exists, return it immediately
   if (cached.conn) {
     return cached.conn;
@@ -45,6 +42,11 @@ async function connectDB(): Promise<typeof mongoose> {
 
   // If a connection promise doesn't exist, create a new connection
   if (!cached.promise) {
+    if (!MONGODB_URI) {
+      throw new Error(
+          'Please define the MONGODB_URI environment variable inside .env.local'
+      );
+    }
     const opts = {
       bufferCommands: false, // Disable Mongoose buffering to fail fast in serverless environments
     };
