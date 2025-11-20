@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
-import "./globals.css";
 import LightRays from "@/components/LightRays";
 import Navbar from "@/components/Navbar";
+import type { Metadata } from "next";
+import { Martian_Mono, Schibsted_Grotesk } from "next/font/google";
+import "./globals.css";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
