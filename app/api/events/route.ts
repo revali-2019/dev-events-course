@@ -1,7 +1,7 @@
-import {NextRequest, NextResponse} from "next/server";
+import Event from "@/database/event.model";
 import connectDB from "@/lib/mongodb";
-import Event from "@/database/event.model" ;
-import { v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST (req: NextRequest)  {
     try {
@@ -18,6 +18,10 @@ export async function POST (req: NextRequest)  {
         if (!file) {
             return NextResponse.json({message: 'Image File is required'}, {status : 400});
         }
+
+        let tags = JSON.parse(formData.get('tags') as string);
+        let agenda = JSON.parse(formData.get('agenda') as string);
+
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
@@ -30,7 +34,10 @@ export async function POST (req: NextRequest)  {
         })
         event.image = (uploadResult as {secure_url: string}).secure_url;
 
-        const createdEvent = await Event.create(event);
+        const createdEvent = await Event.create({
+            ...event,
+        tags: tags,
+        agenda: agenda});
         return NextResponse.json({message: 'Successfully Created Event', event: createdEvent}, {status:201});
     }catch (e) {
         console.error(e);

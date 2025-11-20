@@ -1,4 +1,23 @@
-import { Schema, model, models, Document } from 'mongoose';
+import { Document, Schema, model, models } from 'mongoose';
+
+export interface IEventPlain { 
+  title: string;
+  slug: string;
+  description: string;
+  overview: string;
+  image: string;
+  venue: string;
+  location: string;
+  date: string;
+  time: string;
+  mode: string;
+  audience: string;
+  agenda: string[];
+  organizer: string;
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 // TypeScript interface for the Event document
 export interface IEvent extends Document {

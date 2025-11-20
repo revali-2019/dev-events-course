@@ -1,12 +1,13 @@
 import connectDB from "@/lib/mongodb";
-import Event, {IEvent} from "../../../../database/event.model";
-import {NextRequest, NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import Event from "../../../../database/event.model";
 
 type RouteParams = {
     params : Promise < {slug : string} >
 }
 
 export async function GET(req: NextRequest, {params} : RouteParams) : Promise<NextResponse> {
+
     try {
         await connectDB();
         const  {slug} = await params ;
